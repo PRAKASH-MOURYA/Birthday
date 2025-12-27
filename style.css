@@ -1,0 +1,1446 @@
+/* 
+   ---------------------------------
+   Global Styles & Variables (Enhanced Phase 3)
+   ---------------------------------
+*/
+:root {
+    --bg-color: #FFF0F5;
+    /* Lavender Blush */
+    --alt-bg-color: #F8E1EE;
+    /* Slightly darker pink/purple */
+    --text-color: #5D4E60;
+    /* Darker muted purple/grey */
+    --highlight-color: #DDA0DD;
+    /* Plum/Orchid */
+    --accent-color: #FF69B4;
+    /* Hot Pink */
+    --soft-cream: #FFFAF0;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    /* Slight opacity for glass feel */
+
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+    --font-handwriting: 'Dancing Script', cursive;
+
+    --transition-speed: 0.3s;
+    --gift-size: 150px;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a2e;
+    /* Deep space blue */
+    --alt-bg-color: #16213e;
+    --text-color: #E6E6FA;
+    --highlight-color: #DA70D6;
+    --accent-color: #FFB7C5;
+    --soft-cream: #0f3460;
+    --card-bg: rgba(22, 33, 62, 0.9);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* 
+   ---------------------------------
+   Global Canvas Overlays (Phase 3)
+   ---------------------------------
+*/
+#star-map,
+#mouse-trail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Let clicks pass through */
+    z-index: -1;
+    /* Behind content */
+}
+
+#mouse-trail {
+    z-index: 9999;
+    /* On top of everything */
+}
+
+#audio-visualizer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.5;
+}
+
+
+/* 
+   ---------------------------------
+   Typography & Sections
+   ---------------------------------
+*/
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    color: var(--text-color);
+}
+
+h2.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+h2.section-title::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background: var(--accent-color);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+section {
+    padding: 4rem 1rem;
+    position: relative;
+}
+
+section.alt-bg {
+    background-color: var(--alt-bg-color);
+}
+
+/* Global Container Polish */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    /* Initial padding */
+    position: relative;
+    z-index: 2;
+    /* Ensure content is centered if it's text */
+    /* text-align: center; Optional, depends on design preference */
+}
+
+/* Force perfect centering for these specific interactive sections */
+#cake-section .container,
+#surprise .container,
+#reasons .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.gallery-grid {
+    display: grid;
+    /* Improved grid for better alignment */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    /* Increased gap */
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Buttons */
+.cta-btn {
+    background: linear-gradient(135deg, var(--accent-color), var(--highlight-color));
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+}
+
+/* 
+   ---------------------------------
+   Theme Toggle
+   ---------------------------------
+*/
+#theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--card-bg);
+    border: 2px solid var(--text-color);
+    color: var(--text-color);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* 
+   ---------------------------------
+   Hero Section (Particle Text)
+   ---------------------------------
+*/
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0 20px;
+    /* Prevent overflow on small screens */
+}
+
+.parallax-bg {
+    /* Background handled by Star Map Canvas now */
+    background: transparent;
+}
+
+.hero-content {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#particle-container {
+    width: 800px;
+    height: 200px;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+#text-particles {
+    width: 100%;
+    height: 100%;
+}
+
+.hero .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+/* Floating Elements (Fallback) */
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.6;
+    animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+/* 
+   ---------------------------------
+   Entry Overlay (New Feature)
+   ---------------------------------
+*/
+#entry-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--bg-color), var(--alt-bg-color));
+    z-index: 10000;
+    /* Highest priority */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease-out;
+}
+
+.entry-content {
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.entry-content h1 {
+    font-size: 3rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-family: var(--font-handwriting);
+}
+
+.entry-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+#enter-btn {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#enter-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hidden-fade {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 
+   ---------------------------------
+   New Music Controls
+   ---------------------------------
+*/
+.music-controls-container {
+    position: fixed;
+    bottom: 20px;
+    right: 80px;
+    /* Next to theme toggle if needed, or adjust */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-bg);
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.music-control-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: transform 0.2s;
+}
+
+.music-control-btn:hover {
+    transform: scale(1.1);
+}
+
+.volume-slider-container {
+    width: 80px;
+    display: flex;
+    align-items: center;
+}
+
+#volume-slider {
+    width: 100%;
+    cursor: pointer;
+    accent-color: var(--accent-color);
+}
+
+/* 
+   ---------------------------------
+   About Section
+   ---------------------------------
+*/
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.qualities {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.badgem {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+}
+
+.badge-pink {
+    background: #FFB7C5;
+    color: #5D4E60;
+}
+
+.badge-purple {
+    background: #DDA0DD;
+    color: white;
+}
+
+.badge-peach {
+    background: #FFDAB9;
+    color: #5D4E60;
+}
+
+.about-img {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Vertical center */
+}
+
+.profile-pic {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 20%;
+    /* Adjusted to likely show face + flowers */
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1), -20px -20px 60px rgba(255, 255, 255, 0.5);
+    border: 5px solid white;
+    /* Optional: adds a nice frame */
+}
+
+/* 
+   ---------------------------------
+   Gallery
+   ---------------------------------
+*/
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    background: var(--card-bg);
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.img-box {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.img-contain {
+    object-fit: contain !important;
+    background-color: #000;
+    /* Dark background for letterboxing looks cinematic */
+}
+
+.rotate-90 {
+    transform: rotate(270deg) !important;
+}
+
+.caption {
+    text-align: center;
+    padding: 10px 0 0;
+    font-style: italic;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* 
+   ---------------------------------
+   3D Memory Flipbook (Phase 3)
+   ---------------------------------
+*/
+.book-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1500px;
+    height: 400px;
+}
+
+.book {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+/* Manual Flip Logic (Replaces Hover) */
+.book.book-open {
+    transform: translateX(150px);
+}
+
+.page {
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.15, 0.6, 0.15, 1);
+    background: white;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: calc(5 - var(--i));
+    cursor: pointer;
+    /* Indicate clickable */
+}
+
+/* When a specific page has class 'flipped', rotate it */
+.page.flipped {
+    transform: rotateY(-160deg);
+    z-index: 5;
+    /* Bring to top when flipped? Or let natural order handle? */
+    /* Actually z-index needs to be handled carefully or just rely on 3d space */
+}
+
+/* 
+   We remove the generic .book:hover .page rules 
+   because we want individual page control 
+*/
+
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    background: var(--soft-cream);
+    border: 1px solid #ddd;
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.cover-front .front {
+    background: linear-gradient(135deg, var(--accent-color), var(--highlight-color));
+    color: white;
+}
+
+.cover-front h1 {
+    color: white;
+    margin-bottom: 20px;
+    font-family: var(--font-handwriting);
+    font-size: 3rem;
+}
+
+
+/* 
+   ---------------------------------
+   Open When Envelopes (Phase 3)
+   ---------------------------------
+*/
+.envelopes-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    /* Increased gap */
+    flex-wrap: wrap;
+    padding: 20px 0;
+}
+
+.envelope-item {
+    text-align: center;
+    cursor: pointer;
+}
+
+.envelope {
+    width: 150px;
+    height: 100px;
+    background: #FFFAF0;
+    position: relative;
+    margin: 0 auto 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.envelope:hover {
+    transform: translateY(-5px);
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 75px solid transparent;
+    border-right: 75px solid transparent;
+    border-top: 50px solid var(--highlight-color);
+    transform-origin: top;
+    transition: transform 0.4s;
+    z-index: 2;
+}
+
+.envelope:hover .flap {
+    transform: rotateX(180deg);
+}
+
+.pocket {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-left: 75px solid var(--alt-bg-color);
+    border-right: 75px solid var(--alt-bg-color);
+    border-bottom: 50px solid var(--highlight-color);
+    border-top: 50px solid transparent;
+    z-index: 1;
+}
+
+.letter-preview {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    background: white;
+    height: 80px;
+    font-size: 0.8rem;
+    padding: 5px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s;
+    z-index: 0;
+}
+
+.envelope:hover .letter-preview {
+    transform: translateY(-20px);
+}
+
+
+/* 
+   ---------------------------------
+   Interactive Cake (Phase 3)
+   ---------------------------------
+*/
+.cake-container {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.cake {
+    position: relative;
+    width: 250px;
+    height: 200px;
+}
+
+.plate {
+    position: absolute;
+    bottom: 0;
+    left: -25px;
+    width: 300px;
+    height: 10px;
+    background: #ccc;
+    border-radius: 5px;
+}
+
+.layer {
+    position: absolute;
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+.layer-bottom {
+    bottom: 10px;
+    left: 0;
+    width: 250px;
+    height: 80px;
+}
+
+.layer-middle {
+    bottom: 90px;
+    left: 25px;
+    width: 200px;
+    height: 60px;
+    background: var(--highlight-color);
+}
+
+.layer-top {
+    bottom: 150px;
+    left: 50px;
+    width: 150px;
+    height: 50px;
+}
+
+.icing {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+}
+
+.drip {
+    position: absolute;
+    width: 10px;
+    height: 20px;
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+}
+
+.drip1 {
+    top: 50px;
+    left: 60px;
+}
+
+.drip2 {
+    top: 50px;
+    left: 100px;
+}
+
+.drip3 {
+    top: 50px;
+    left: 140px;
+}
+
+.candles {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+.candle {
+    width: 10px;
+    height: 30px;
+    background: repeating-linear-gradient(45deg, #FFD700, #FFD700 5px, #FFA500 5px, #FFA500 10px);
+    position: relative;
+}
+
+.flame {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 15px;
+    background: #FF4500;
+    border-radius: 50% 50% 20% 20%;
+    animation: flicker 0.5s infinite alternate;
+    cursor: pointer;
+}
+
+.smoke {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 20px;
+    background: rgba(100, 100, 100, 0.5);
+    border-radius: 50%;
+    animation: smokeRise 1s forwards;
+}
+
+@keyframes flicker {
+    0% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-50%) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes smokeRise {
+    0% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(-20px);
+        opacity: 0;
+    }
+}
+
+
+/* 
+   ---------------------------------
+   Gift Box & Carousel (Retained)
+   ---------------------------------
+*/
+.gift-container {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    margin-top: 50px;
+}
+
+.gift-box {
+    width: var(--gift-size);
+    height: var(--gift-size);
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transition: transform 1s ease-in-out;
+    animation: floatGift 3s ease-in-out infinite;
+}
+
+.gift-box:hover {
+    animation: shakeGift 0.5s infinite;
+}
+
+.gift-box.open {
+    transform: translateY(100px) rotateX(0deg) rotateY(180deg);
+    animation: none;
+}
+
+.gift-body {
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color);
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.gift-lid {
+    width: 110%;
+    height: 25%;
+    background: var(--highlight-color);
+    position: absolute;
+    top: -15%;
+    left: -5%;
+
+    @media (max-width: 768px) {
+        h2.section-title {
+            font-size: 2rem;
+        }
+
+        .about-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .about-img {
+            margin-top: 2rem;
+        }
+
+        .img-placeholder {
+            width: 200px;
+            height: 200px;
+            font-size: 3rem;
+        }
+
+        #particle-container {
+            width: 100%;
+            height: 150px;
+        }
+
+        .music-controls-container {
+            bottom: 10px;
+            right: 10px;
+            padding: 5px 15px;
+        }
+
+        .volume-slider-container {
+            width: 60px;
+        }
+
+        #entry-overlay h1 {
+            font-size: 2rem;
+        }
+    }
+
+    z-index: 2;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gift-box.open .gift-lid {
+    transform: rotateX(-110deg) translateY(-50px);
+}
+
+.ribbon-vertical {
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    background: white;
+    left: 40%;
+}
+
+.ribbon-horizontal {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    background: white;
+    top: 40%;
+}
+
+.ribbon-bow {
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    background: white;
+    left: 40%;
+}
+
+@keyframes floatGift {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes shakeGift {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(5deg);
+    }
+
+    75% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* Carousel */
+.carousel {
+    position: relative;
+    height: 200px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.carousel-track-container {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.carousel-track {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reason-card {
+    text-align: center;
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.reason-card h3 {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.reason-card p {
+    font-size: 1.2rem;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--text-color);
+    z-index: 10;
+}
+
+.carousel-button--left {
+    left: -40px;
+}
+
+.carousel-button--right {
+    right: -40px;
+}
+
+.carousel-nav {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.carousel-indicator {
+    border: 0;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.carousel-indicator.current-slide {
+    background: var(--accent-color);
+}
+
+/* 
+   ---------------------------------
+   Footer & Garden
+   ---------------------------------
+*/
+footer {
+    text-align: center;
+    padding: 0;
+    background: transparent;
+    margin-top: 2rem;
+    position: relative;
+    height: 200px;
+    /* Space for garden */
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+#flower-garden {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.footer-content {
+    z-index: 2;
+    padding-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.7);
+    width: 100%;
+}
+
+.heart-pulse {
+    display: inline-block;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 
+   ---------------------------------
+   Popup & Modals
+   ---------------------------------
+*/
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.popup-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.popup-content {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: scale(0.8);
+    transition: transform 0.3s;
+}
+
+.popup-content.paper {
+    background: #fffdf0;
+    background-image: repeating-linear-gradient(#fffdf0 0px, #fffdf0 24px, #00BFFF 25px);
+    line-height: 25px;
+    font-family: var(--font-handwriting);
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.popup-overlay.show .popup-content {
+    transform: scale(1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+/* Fade In */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 {
+    transition-delay: 0.2s;
+}
+
+.delay-2 {
+    transition-delay: 0.4s;
+}
+
+/* 
+   ---------------------------------
+   Countdown Overlay (Phase 5)
+   ---------------------------------
+*/
+#countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #FFB7C5, #E6E6FA);
+    /* Soft pink fade */
+    z-index: 99999;
+    /* Topmost */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    transition: opacity 1s ease-in-out, visibility 1s;
+}
+
+#countdown-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.countdown-content h1 {
+    font-family: var(--font-heading);
+    color: var(--text-color);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+#timer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.time-box {
+    background: rgba(255, 255, 255, 0.4);
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 100px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: float 4s infinite ease-in-out;
+}
+
+.time-box span {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    font-family: var(--font-body);
+}
+
+.time-box p {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+.wait-msg {
+    font-size: 1.2rem;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Mobile countdown */
+@media (max-width: 768px) {
+    #timer {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .time-box {
+        min-width: 70px;
+        padding: 10px;
+    }
+
+    .time-box span {
+        font-size: 2rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    #particle-container {
+        width: 100%;
+        height: 100px;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .qualities {
+        justify-content: center;
+    }
+
+    .carousel-button {
+        display: none;
+    }
+
+    .carousel {
+        width: 100%;
+    }
+
+    .book {
+        width: 250px;
+        height: 350px;
+    }
+
+    .page {
+        width: 250px;
+        height: 350px;
+    }
+}
+
+/* 
+   ---------------------------------
+   Floating Balloons (New Feature)
+   ---------------------------------
+*/
+#balloon-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Let clicks pass through to balloons usually, but container shouldn't block */
+    z-index: 9995;
+    /* Below overlays but above content */
+    overflow: hidden;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -120px;
+    width: 50px;
+    height: 70px;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    background-color: var(--accent-color);
+    box-shadow: inset -5px -5px 0 rgba(0, 0, 0, 0.1);
+    animation: floatUp 10s linear forwards;
+    cursor: pointer;
+    pointer-events: auto;
+    /* Balloons are clickable */
+    display: flex;
+    justify-content: center;
+}
+
+.balloon::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    width: 2px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.balloon::after {
+    content: '';
+    /* Knot */
+    position: absolute;
+    bottom: -2px;
+    width: 6px;
+    height: 4px;
+    background: inherit;
+    border-radius: 2px;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-120vh) rotate(20deg);
+        opacity: 0;
+    }
+}
